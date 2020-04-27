@@ -71,7 +71,7 @@ void main() {
         // This endpoint will get a request from the Server, to which we respond - and the server will then send the reply back to the Terminator below.
         matsSocket.endpoint('ClientSide.endpoint', (messageEvent) {
           expect(messageEvent.traceId, equals(traceId));
-          var promise = Completer();
+          var promise = Completer.sync();
           // Resolve it a tad later, to "emulate" some kind of processing
           Timer.run(() {
             var data = messageEvent.data;
@@ -233,12 +233,12 @@ void main() {
         // First set it to "all the things!"
         matsSocket.debug = 255;
 
-        var first = matsSocket.send('Test.single', 'DebugOptions_set_to_all', {'number': math.e});
+        var _ = matsSocket.send('Test.single', 'DebugOptions_set_to_all', {'number': math.e});
 
         // Then set it to none (0 or undefined), which should result in NO debug object from server-initiated messages
         matsSocket.debug = debugOptions;
 
-        var second = matsSocket.send('Test.server.send.thread', traceId, {'number': math.e});
+        _ = matsSocket.send('Test.server.send.thread', traceId, {'number': math.e});
 
         var msg = await terminator.first;
 

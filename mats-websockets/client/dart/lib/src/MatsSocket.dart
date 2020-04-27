@@ -584,7 +584,7 @@ class MatsSocket {
           'The namespace "MatsSocket" is reserved, TerminatorId [$terminatorId] is illegal.');
     }
     _logger.info('Registering Terminator on id [$terminatorId]');
-    _terminators[terminatorId] = StreamController<MessageEvent>();
+    _terminators[terminatorId] = StreamController<MessageEvent>(sync: true);
     return _terminators[terminatorId].stream;
   }
 
@@ -750,7 +750,7 @@ class MatsSocket {
   ///         using [addInitiationProcessedEventListener()]
   Future<ReceivedEvent> send(String endpointId, String traceId, dynamic message,
       {bool suppressInitiationProcessedEvent = false}) {
-    final handler = Completer<ReceivedEvent>();
+    final handler = Completer<ReceivedEvent>.sync();
     final initiation = _Initiation(suppressInitiationProcessedEvent, debug ?? 0, handler.complete, handler.completeError);
     final envelope = MatsSocketEnvelopeDto(
         type: MessageType.SEND,
@@ -2610,7 +2610,7 @@ class _Initiation {
 
 class _Request {
   final Duration timeout;
-  final Completer<MessageEvent> _completer = Completer();
+  final Completer<MessageEvent> _completer = Completer.sync();
   final String replyToTerminatorId;
   final dynamic correlationInformation;
 
