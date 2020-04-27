@@ -22,7 +22,7 @@ String reason(ConnectionEvent connectionEvent) {
 void configureLogging() {
   // We can set the log level through the environment variables, which enables
   // setting the level from gradle.
-  var envLogLevel = Platform.environment['LOG_LEVEL'] ?? 'INFO';
+  var envLogLevel = Platform.environment['LOG_LEVEL'] ?? 'DEBUG';
   switch (envLogLevel) {
     case 'DEBUG': { Logger.root.level = Level.ALL; }
     break;

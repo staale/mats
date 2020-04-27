@@ -68,7 +68,7 @@ task dartTest(dependsOn: startMatsTestWebsocketServer) {
                 environment("LOG_LEVEL", "INFO")
             }
             else {
-                environment("LOG_LEVEL", "SEVERE")
+                environment("LOG_LEVEL", "DEBUG")
             }
             def platform = "vm"
             if (project.hasProperty('platform')) {
